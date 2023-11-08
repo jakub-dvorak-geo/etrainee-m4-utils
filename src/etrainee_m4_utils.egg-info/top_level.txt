@@ -1,1 +1,1 @@
-etrainee-m4-utils
+etrainee_m4_utils
