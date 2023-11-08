@@ -1,0 +1,1 @@
+A package containing utilities for classification exercises in module 4 of e-trainee. 

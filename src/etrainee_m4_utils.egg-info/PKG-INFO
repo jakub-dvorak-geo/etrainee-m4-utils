@@ -1,0 +1,14 @@
+Metadata-Version: 2.1
+Name: etrainee-m4-utils
+Version: 0.0.1
+Summary: A package containing utilities for classification exercises in module 4 of e-trainee.
+Author-email: Jakub Dvorak <jacobdvorakcz@gmail.com>
+Project-URL: Homepage, https://github.com/jakub-dvorak-geo/etrainee-m4-utils
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+A package containing utilities for classification exercises in module 4 of e-trainee. 

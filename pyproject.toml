@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "etrainee-m4-utils"
+version = "0.0.1"
+authors = [
+  { name="Jakub Dvorak", email="jacobdvorakcz@gmail.com" },
+]
+description = "A package containing utilities for classification exercises in module 4 of e-trainee."
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/jakub-dvorak-geo/etrainee-m4-utils"
