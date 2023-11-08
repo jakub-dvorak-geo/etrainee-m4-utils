@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "etrainee-m4-utils"
-version = "0.0.1"
+version = "0.1.0"
 authors = [
   { name="Jakub Dvorak", email="jacobdvorakcz@gmail.com" },
 ]

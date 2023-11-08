@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: etrainee-m4-utils
-Version: 0.0.1
+Version: 0.1.0
 Summary: A package containing utilities for classification exercises in module 4 of e-trainee.
 Author-email: Jakub Dvorak <jacobdvorakcz@gmail.com>
 Project-URL: Homepage, https://github.com/jakub-dvorak-geo/etrainee-m4-utils
