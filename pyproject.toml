@@ -4,13 +4,18 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "etrainee-m4-utils"
-version = "0.1.0"
+version = "0.1.1"
 authors = [
   { name="Jakub Dvorak", email="jacobdvorakcz@gmail.com" },
 ]
 description = "A package containing utilities for classification exercises in module 4 of e-trainee."
 readme = "README.md"
 requires-python = ">=3.7"
+dependencies = [
+	"numpy>1.17.0",
+	"scipy>1.4.1",
+	"gdal>3.0.0",
+]
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",

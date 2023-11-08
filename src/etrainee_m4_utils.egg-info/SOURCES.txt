@@ -8,4 +8,5 @@ src/etrainee-m4-utils/visualisation_utils.py
 src/etrainee_m4_utils.egg-info/PKG-INFO
 src/etrainee_m4_utils.egg-info/SOURCES.txt
 src/etrainee_m4_utils.egg-info/dependency_links.txt
+src/etrainee_m4_utils.egg-info/requires.txt
 src/etrainee_m4_utils.egg-info/top_level.txt
