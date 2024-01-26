@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
-Name: etrainee-m4-utils
-Version: 0.1.4
+Name: etrainee_m4_utils
+Version: 0.2.0
 Summary: A package containing utilities for classification exercises in module 4 of e-trainee.
 Author-email: Jakub Dvorak <jacobdvorakcz@gmail.com>
 Project-URL: Homepage, https://github.com/jakub-dvorak-geo/etrainee_m4_utils
@@ -14,4 +14,4 @@ Requires-Dist: numpy>1.17.0
 Requires-Dist: scipy>1.4.1
 Requires-Dist: gdal>3.0.0
 
-A package containing utilities for classification exercises in module 4 of e-trainee. 
+A package containing utilities for classification exercises in module 4 of [e-trainee](https://3dgeo-heidelberg.github.io/etrainee/module4/module4.html).

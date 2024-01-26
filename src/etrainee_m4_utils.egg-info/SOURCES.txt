@@ -2,6 +2,7 @@ LICENSE
 README.md
 pyproject.toml
 src/etrainee_m4_utils/__init__.py
+src/etrainee_m4_utils/hs_classification.py
 src/etrainee_m4_utils/image_preprocessing.py
 src/etrainee_m4_utils/inference_utils.py
 src/etrainee_m4_utils/visualisation_utils.py

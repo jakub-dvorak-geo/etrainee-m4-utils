@@ -1,0 +1,4 @@
+Changes made to pysptools:
+	Only two functions from the original package are used (SAM_classifier, SID_classifier).
+	SAM and SID classifier functions are used independently of the original class.
+	Bugfix - type aliases made to work with numpy >= 1.20

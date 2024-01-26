@@ -1,1 +1,1 @@
-A package containing utilities for classification exercises in module 4 of e-trainee. 
+A package containing utilities for classification exercises in module 4 of [e-trainee](https://3dgeo-heidelberg.github.io/etrainee/module4/module4.html).
