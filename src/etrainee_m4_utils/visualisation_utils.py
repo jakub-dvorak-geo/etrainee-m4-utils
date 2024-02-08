@@ -8,40 +8,43 @@ from sklearn.metrics import confusion_matrix
 
 
 def _create_colorlist_classnames(arr=None, ds_name='pavia_centre'):
-	"""Return correct colormap and class names for plotting."""
-	if ds_name == 'pavia_centre':
-		color_list = ('white', 'blue', 'green', 'olive', 'red',
-              'yellow', 'grey', 'cyan', 'orange', 'black')
-		class_names = ('No Data', 'Water', 'Trees', 'Meadows', 'Self-Blocking Bricks',
-			'Bare Soil', 'Asphalt', 'Bitumen', 'Tiles', 'Shadows')
+    """Return correct colormap and class names for plotting."""
+    if ds_name == 'pavia_centre':
+        color_list = ('white', 'blue', 'green', 'olive', 'red',
+                      'yellow', 'grey', 'cyan', 'orange', 'black')
+        class_names = ('No Data', 'Water', 'Trees', 'Meadows',
+                       'Self-Blocking Bricks', 'Bare Soil', 'Asphalt',
+                       'Bitumen', 'Tiles', 'Shadows')
 
-	elif ds_name == 'lucni_hora':
-		color_list = ('white', 'red', 'green', 'yellow', 'orange', 'purple',
-            'blue', 'cyan', 'black', 'grey')
-		class_names = ('No Data', 'Metlička Křivolaká',
-            'metlička, tomka a ostřice',
-            'brusnice borůvková', 'metlice trsnatá',
-            'borovice kleč', 'smilka tuhá', 'kamenná moře bez vegetace',
-            'vřes obecný', 'kameny, půda, mechy a vegetace')
+    elif ds_name == 'lucni_hora':
+        color_list = ('white', 'red', 'green', 'yellow', 'orange', 'purple',
+                      'blue', 'cyan', 'black', 'grey')
+        class_names = ('No Data', 'Metlička Křivolaká',
+                       'metlička, tomka a ostřice', 'brusnice borůvková',
+                       'metlice trsnatá', 'borovice kleč', 'smilka tuhá',
+                       'kamenná moře bez vegetace', 'vřes obecný',
+                       'kameny, půda, mechy a vegetace')
 
-	elif ds_name == 'bila_louka':
-		color_list = ('white', 'red', 'green', 'yellow',
+    elif ds_name == 'bila_louka':
+        color_list = ('white', 'red', 'green', 'yellow',
                       'orange', 'purple', 'blue', 'grey')
-		class_names = ('No Data', 'afs', 'cv', 'cxbig',
+        class_names = ('No Data', 'afs', 'cv', 'cxbig',
                        'desch', 'mol', 'nard', 'smrk')
 
-	else:
-		print('Incorrect dataset name for creating a plot. Cannot create a colormap and a list of class names.')
-		print('Valid dataset names are "lucni_hora", "bila_louka" or "pavia_centre".')
+    else:
+        print('Incorrect dataset name for creating a plot. Cannot create a \
+              colormap and a list of class names.')
+        print('Valid dataset names are "lucni_hora", "bila_louka" or \
+              "pavia_centre".')
 
-	if type(arr) is np.ndarray:
-		arr_min, arr_max = np.min(arr), np.max(arr)
-		out_cmap = color_list[arr_min:arr_max+1]
-		out_class_names = class_names[arr_min:arr_max+1]
-		return out_cmap, out_class_names
+    if type(arr) is np.ndarray:
+        arr_min, arr_max = np.min(arr), np.max(arr)
+        out_cmap = color_list[arr_min:arr_max+1]
+        out_class_names = class_names[arr_min:arr_max+1]
+        return out_cmap, out_class_names
 
-	else:
-		return color_list, class_names
+    else:
+        return color_list, class_names
 
 
 def _image_show(raster, title='Natural color composite'):
@@ -53,7 +56,8 @@ def _image_show(raster, title='Natural color composite'):
 
 def _class_show(raster, title, ds_name='pavia_centre'):
     """Show a figure based on a classification."""
-    colorlist, classnames = _create_colorlist_classnames(raster, ds_name=ds_name)
+    colorlist, classnames = _create_colorlist_classnames(raster,
+                                                         ds_name=ds_name)
     for label, color in zip(classnames, colorlist):
         plt.plot(0, 0, 's', label=label, alpha=1,
                  color=color, markeredgecolor='black')
@@ -108,7 +112,8 @@ def show_spectral_curve(tile_dict, tile_num, ds_name='pavia_centre',
     plt.legend(bbox_to_anchor=(0.5, 0.89), loc='lower center')
 
 
-def show_augment_spectral(tile_dict, tile_num, aug_funct, ds_name='pavia_centre'):
+def show_augment_spectral(tile_dict, tile_num, aug_funct,
+                          ds_name='pavia_centre'):
     """Show a figure of the original spectal curve and the augmented curve."""
     plt.figure(figsize=[8, 4])
     plt.subplot(1, 2, 1)
@@ -123,7 +128,8 @@ def show_augment_spectral(tile_dict, tile_num, aug_funct, ds_name='pavia_centre'
                         title='Augmented spectral curve for pixel #')
 
 
-def show_augment_spatial(tile_dict, tile_num, aug_funct, ds_name='pavia_centre'):
+def show_augment_spatial(tile_dict, tile_num, aug_funct,
+                         ds_name='pavia_centre'):
     """Show a figure of the original and the augmented RGB composite."""
     img_rgb = tile_dict['imagery'][tile_num, [25, 15, 5], :, :]
     img_rgb_transposed = img_rgb.transpose((1, 2, 0))
@@ -135,10 +141,10 @@ def show_augment_spatial(tile_dict, tile_num, aug_funct, ds_name='pavia_centre')
 
     plt.subplot(1, 4, 2)
     img_hs = tile_dict['imagery'][tile_num, :, :, :]
-    img_augmented, gt_augmented = aug_funct(torch.from_numpy(img_hs),
-                                 torch.from_numpy(tile_gt[None, :, :]))
-    print(img_augmented.shape)
-    img_augmented_np = np.array(img_augmented)
+    img_aug, gt_aug = aug_funct(torch.from_numpy(img_hs),
+                                torch.from_numpy(tile_gt[None, :, :]))
+    print(img_aug.shape)
+    img_augmented_np = np.array(img_aug)
     img_aug_trans = img_augmented_np[0, [25, 15, 5], :, :].transpose(1, 2, 0)
 
     _image_show(np.array(img_aug_trans)*20000, title='Augmented RGB composite')
@@ -148,9 +154,12 @@ def show_augment_spatial(tile_dict, tile_num, aug_funct, ds_name='pavia_centre')
     plt.legend(ncol=3, bbox_to_anchor=(0.5, -0.15), loc='lower center')
 
     plt.subplot(1, 4, 4)
-    _class_show(np.array(gt_augmented[0,:,:]), 'Augmented reference data', ds_name=ds_name)
+    _class_show(np.array(gt_aug[0, :, :]), 'Augmented reference data',
+                ds_name=ds_name)
 
-def show_augment_spectro_spatial(tile_dict, tile_num, aug_funct, ds_name = 'pavia_centre'):
+
+def show_augment_spectro_spatial(tile_dict, tile_num, aug_funct,
+                                 ds_name='pavia_centre'):
     """Show a figure of the original and the augmented RGB composite."""
     img_rgb = tile_dict['imagery'][tile_num, 0, [25, 15, 5], :, :]
     img_rgb_transposed = img_rgb.transpose((1, 2, 0))
@@ -162,11 +171,11 @@ def show_augment_spectro_spatial(tile_dict, tile_num, aug_funct, ds_name = 'pavi
 
     plt.subplot(1, 4, 2)
     img_hs = tile_dict['imagery'][tile_num, 0, :, :, :]
-    img_augmented, gt_augmented = aug_funct(torch.from_numpy(img_hs),
-                                 torch.from_numpy(tile_gt[None, :, :]))
-    print(img_augmented.shape)
-    img_augmented_np = np.array(img_augmented)
-    img_aug_trans = img_augmented_np[0, 0, [25, 15, 5], :, :].transpose(1, 2, 0)
+    img_aug, gt_aug = aug_funct(torch.from_numpy(img_hs),
+                                torch.from_numpy(tile_gt[None, :, :]))
+    print(img_aug.shape)
+    img_aug_np = np.array(img_aug)
+    img_aug_trans = img_aug_np[0, 0, [25, 15, 5], :, :].transpose(1, 2, 0)
 
     _image_show(np.array(img_aug_trans)*20000, title='Augmented RGB composite')
 
@@ -175,8 +184,8 @@ def show_augment_spectro_spatial(tile_dict, tile_num, aug_funct, ds_name = 'pavi
     plt.legend(ncol=3)
 
     plt.subplot(1, 4, 4)
-    _class_show(np.array(gt_augmented[0,:,:]), 'Augmented reference data',
-		ds_name=ds_name)
+    _class_show(np.array(gt_aug[0, :, :]), 'Augmented reference data',
+                ds_name=ds_name)
 
 
 def show_classified(hs_img, gt_img, class_img, ds_name='pavia_centre'):
@@ -190,8 +199,7 @@ def show_classified(hs_img, gt_img, class_img, ds_name='pavia_centre'):
     plt.legend(ncol=3)
 
     plt.subplot(1, 3, 3)
-    _class_show(class_img, 'Classified data',
-        ds_name=ds_name)
+    _class_show(class_img, 'Classified data', ds_name=ds_name)
 
 
 def show_confusion_matrix(gt, predict, ds_name='pavia_centre'):
@@ -202,7 +210,7 @@ def show_confusion_matrix(gt, predict, ds_name='pavia_centre'):
     # Add numbers to each position
     for i in range(conf_matrix.shape[0]):
         for j in range(conf_matrix.shape[1]):
-            ax.text(x=j, y=i,s=conf_matrix[i, j], va='center', ha='center')
+            ax.text(x=j, y=i, s=conf_matrix[i, j], va='center', ha='center')
 
     # Make it look good
     ax.set_xlabel('Predicted labels')

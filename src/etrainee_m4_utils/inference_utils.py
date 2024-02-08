@@ -23,11 +23,13 @@ def classify_tiles(model, data, mode='2D'):
 
     for tile in range(data_tensor.shape[0]):
         if mode == '1D':
-            pred = pred_tile(model, test_tensor[tile, :, :][None, :])
-            predicted_arr[tile] = pred[0, :].argmax(0).squeeze().astype(np.uint8)
+            pred = pred_tile(model, data_tensor[tile, :, :][None, :])
+            predicted_arr[tile] = (
+                pred[0, :].argmax(0).squeeze().astype(np.uint8))
         elif mode == '2D' or mode == '3D':
             pred = pred_tile(model, data_tensor[tile, :, :, :][None, :])
-            predicted_arr[tile, :, :] = pred[0, :, :, :].argmax(0).squeeze().astype(np.uint8)
+            predicted_arr[tile, :, :] = (
+                pred[0, :, :, :].argmax(0).squeeze().astype(np.uint8))
 
     return predicted_arr
 

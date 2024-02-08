@@ -153,7 +153,8 @@ def read_pavia_centre(train_path, ref_path=None, out_shape=(1096, 1096, 102)):
     raster_orig_arr = raster_orig['pavia']
     imagery = np.zeros(out_shape, dtype=np.uint16)
     imagery[:, :223, :] = raster_orig_arr[:out_shape[0], :223, :out_shape[2]]
-    imagery[:, 605-(1096-out_shape[1]):, :] = raster_orig_arr[:out_shape[0], 224:, :out_shape[2]]
+    imagery[:, 605-(1096-out_shape[1]):, :] = raster_orig_arr[
+        :out_shape[0], 224:, :out_shape[2]]
     arr_dict = {'imagery': imagery}
 
     if ref_path is not None:
@@ -161,7 +162,8 @@ def read_pavia_centre(train_path, ref_path=None, out_shape=(1096, 1096, 102)):
         raster_gt_arr = raster_gt['pavia_gt'][:, :, None]
         reference = np.zeros([out_shape[0], out_shape[1], 1], dtype=np.uint8)
         reference[:, :223, :] = raster_gt_arr[:out_shape[0], :223, :]
-        reference[:, 605-(1096-out_shape[1]):, :] = raster_gt_arr[:out_shape[0], 224:, :]
+        reference[:, 605-(1096-out_shape[1]):, :] = raster_gt_arr[
+            :out_shape[0], 224:, :]
         arr_dict['reference'] = reference
 
     arr_dict['geoinfo'] = {}

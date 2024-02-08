@@ -1,5 +1,5 @@
 #
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2013-2014, Christian Therien
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,7 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 #
 
 
@@ -42,10 +42,10 @@ def _normalize(M):
     minVal = np.min(M)
     maxVal = np.max(M)
 
-    Mn = M - minVal;
+    Mn = M - minVal
 
     if maxVal == minVal:
-        return np.zeros(M.shape);
+        return np.zeros(M.shape)
     else:
         return Mn / (maxVal-minVal)
 
@@ -66,9 +66,11 @@ def _single_value_min(data, threshold):
 
 # For the SAM_classifier function, if you have these errors messages:
 """
-C:\somepath\pysptools\classifiers\hs_classification.py:98: RuntimeWarning: invalid value encountered in arccos
+C:/somepath/pysptools/classifiers/hs_classification.py:98:
+  RuntimeWarning: invalid value encountered in arccos
   angles = np.arccos(np.round(sum_T_R / mul_T_R, _round_threshold))
-C:\somepath\pysptools\classifiers\hs_classification.py:19: RuntimeWarning: invalid value encountered in less
+C:/somepath/pysptools/classifiers/hs_classification.py:19:
+  RuntimeWarning: invalid value encountered in less
   min_mask = min_vec < limit
 """
 # ajust the _round_threshold parameter accordingly,
@@ -109,7 +111,7 @@ def SAM_classifier(M, E, threshold=0.1):
     sum_T_R = np.dot(E, M.T).T
     mul_T_R = np.ndarray((TNA.shape[0], RNA.shape[0]), dtype=float)
     for i in range(TNA.shape[0]):
-        mul_T_R[i] = np.multiply(TNA[i],RNA)
+        mul_T_R[i] = np.multiply(TNA[i], RNA)
     # read above for _round_threshold
     angles = np.arccos(np.round(sum_T_R / mul_T_R, _round_threshold))
     if isinstance(threshold, float):
@@ -149,9 +151,9 @@ def SID_classifier(M, E, threshold=0.1):
     q = prob_vector_array(E)
     sid = np.ndarray((mn, N), dtype=float)
     for i in range(mn):
-        pq = q[0:,:] * np.log(q[0:,:] / p[i,:])
-        pp = p[i,:] * np.log(p[i,:] / q[0:,:])
-        sid[i,:] = np.sum(pp[0:,:] + pq[0:,:], axis=1)
+        pq = q[0:, :] * np.log(q[0:, :] / p[i, :])
+        pp = p[i, :] * np.log(p[i, :] / q[0:, :])
+        sid[i, :] = np.sum(pp[0:, :] + pq[0:, :], axis=1)
     if isinstance(threshold, float):
         cmap = _single_value_min(sid, threshold)
     else:
