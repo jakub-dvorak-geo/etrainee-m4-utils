@@ -11,10 +11,9 @@ The module contains the following functions:
 """
 
 import numpy as np
-from osgeo import gdal
+import rasterio
 from scipy.io import loadmat
 
-gdal.UseExceptions()
 
 """ --delete
 class Image_reader:
@@ -119,46 +118,6 @@ def return_dimensions(in_arr, out_shape=(256, 256), out_overlap=128,
     }
     del dataset
     return dims
-
-
-def read_gdal(trainingdata_path, referencedata_path):
-    """Read data using gdal and transform into numpy array."""
-    raster_orig = gdal.Open(trainingdata_path)
-    raster_orig_arr = np.moveaxis(raster_orig.ReadAsArray(), 0, -1)
-    raster_orig = None
-
-    raster_gt = gdal.Open(referencedata_path)
-    raster_gt_arr = np.expand_dims(raster_gt.ReadAsArray(), axis=-1)
-    raster_gt = None
-
-    arr_dict = {'imagery': raster_orig_arr,
-                'reference': raster_gt_arr}
-    return arr_dict
-
-
-def read_gdal_with_geoinfo(trainingdata_path, offset=(0, 0)):
-    """Read data using gdal and transform into numpy array."""
-    def retrieve_geoinfo(img, offset):
-        old_geot = img.GetGeoTransform()
-        new_geot = (old_geot[0] + old_geot[1] * offset[0],
-                    old_geot[1],
-                    old_geot[2],
-                    old_geot[3] + old_geot[5] * offset[1],
-                    old_geot[4],
-                    old_geot[5])
-        geoinfo = {
-            'projection': img.GetProjection(),
-            'geotransform': new_geot
-            }
-        return geoinfo
-
-    raster_orig = gdal.Open(trainingdata_path)
-    raster_orig_arr = np.moveaxis(raster_orig.ReadAsArray(), 0, -1)
-    raster_orig_geoinfo = retrieve_geoinfo(raster_orig, offset)
-    raster_orig = None
-
-    arr_dict = {'imagery': raster_orig_arr, 'geoinfo': raster_orig_geoinfo}
-    return arr_dict
 
 
 def read_pavia_centre(train_path, ref_path=None, out_shape=(1096, 1096, 102)):
@@ -302,14 +261,6 @@ def normalize_tiles_3d(in_dict, nodata_vals=[], is_training=False):
         arr_dict['imagery'] = norm_dict['imagery'][:, None, :, :, :]
         return arr_dict
 
-import rasterio
-def test_rasterio(in_path):
-    with rasterio.open(in_path) as src:
-        loaded_dataset = np.moveaxis(src.read(), 0, -1)
-        print(loaded_dataset.shape)
-        print(src.transform)
-        print(src.crs)
-
 
 def read_rasterio(img_path: str, ref_path: str = None,
                   offset: tuple = (0, 0)) -> dict:
@@ -318,28 +269,44 @@ def read_rasterio(img_path: str, ref_path: str = None,
     Args:
         img_path: A path to the input file containing imagery.
         ref_path: A path to the input file containing reference.
-        offset: Tuple of two values for movement in height and width.
+        offset: [NOT IMPLEMENTED] Tuple of two values for movement in \
+            height and width.
 
     Returns:
         A dictionary containing imagery, (reference), crs and transform
     """
-    raise NotImplementedError
+    # Create dict to collect loaded values
+    out_dict: dict = {}
+
+    if offset != (0, 0):
+        raise NotImplementedError('Offseting is not currently implemented.')
+
+    # Load the input imagery and geoinformation
+    with rasterio.open(img_path) as img:
+        out_dict['imagery'] = np.moveaxis(img.read(), 0, -1)
+        out_dict['crs'] = img.crs
+        out_dict['transform'] = img.transform
+
+    if ref_path:
+        with rasterio.open(ref_path) as ref:
+            if out_dict['crs'] != ref.crs:
+                raise Exception('The input rasters are in a different CRS.')
+            elif out_dict['transform'] != ref.transform:
+                raise Exception('The input rasters do not overlap.')
+            else:
+                out_dict['reference'] = np.moveaxis(ref.read(), 0, -1)
+
+    return out_dict
 
 
 def main():
     imagery_path = 'E:/datasets/etrainee/BL_202008_imagery.tif'
     reference_path = 'E:/datasets/etrainee/BL_202008_reference.tif'
 
-    # loaded_data = read_gdal(imagery_path, reference_path)
-    # print(loaded_data['imagery'].shape)
-    loaded_imagery = read_gdal_with_geoinfo(imagery_path)
-    print(loaded_imagery['imagery'].shape)
-    print(loaded_imagery['geoinfo'])
-    print('----------------------------------------------------')
-
-    test_rasterio(imagery_path)
-
-    read_rasterio(imagery_path)
+    loaded_img = read_rasterio(imagery_path, reference_path)
+    print(loaded_img)
+    print(loaded_img['imagery'].shape)
+    print(loaded_img['reference'].shape)
 
 
 if __name__ == '__main__':
