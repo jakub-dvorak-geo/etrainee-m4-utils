@@ -120,29 +120,6 @@ def return_dimensions(in_arr, out_shape=(256, 256), out_overlap=128,
     return dims
 
 
-def read_pavia_centre(train_path, ref_path=None, out_shape=(1096, 1096, 102)):
-
-    raster_orig = loadmat(train_path)
-    raster_orig_arr = raster_orig['pavia']
-    imagery = np.zeros(out_shape, dtype=np.uint16)
-    imagery[:, :223, :] = raster_orig_arr[:out_shape[0], :223, :out_shape[2]]
-    imagery[:, 605-(1096-out_shape[1]):, :] = raster_orig_arr[
-        :out_shape[0], 224:, :out_shape[2]]
-    arr_dict = {'imagery': imagery}
-
-    if ref_path is not None:
-        raster_gt = loadmat(ref_path)
-        raster_gt_arr = raster_gt['pavia_gt'][:, :, None]
-        reference = np.zeros([out_shape[0], out_shape[1], 1], dtype=np.uint8)
-        reference[:, :223, :] = raster_gt_arr[:out_shape[0], :223, :]
-        reference[:, 605-(1096-out_shape[1]):, :] = raster_gt_arr[
-            :out_shape[0], 224:, :]
-        arr_dict['reference'] = reference
-
-    arr_dict['geoinfo'] = {}
-    return arr_dict
-
-
 def run_tiling_dims(in_arr, out_shape=(256, 256), out_overlap=128,
                     offset=(0, 0)):
     """Tile the image."""
@@ -264,7 +241,8 @@ def normalize_tiles_3d(in_dict, nodata_vals=[], is_training=False):
 
 def read_rasterio(img_path: str, ref_path: str = None,
                   offset: tuple = (0, 0)) -> dict:
-    """Read imagery for training or inference.
+    """Read imagery for training or inference from any rasters compatible with\
+    rasterio/GDAL. When used for training, provide a ref_path.
 
     Args:
         img_path: A path to the input file containing imagery.
@@ -273,7 +251,7 @@ def read_rasterio(img_path: str, ref_path: str = None,
             height and width.
 
     Returns:
-        A dictionary containing imagery, (reference), crs and transform
+        A dictionary containing imagery, (reference), crs and transform.
     """
     # Create dict to collect loaded values
     out_dict: dict = {}
@@ -296,6 +274,49 @@ def read_rasterio(img_path: str, ref_path: str = None,
             else:
                 out_dict['reference'] = np.moveaxis(ref.read(), 0, -1)
 
+    return out_dict
+
+
+def read_pavia_centre(img_path: str, ref_path: str = None,
+                      out_shape: tuple = (1096, 1096, 102)) -> dict:
+    """Read imagery for training or inference from matlab matrices of the \
+    Pavia City Centre benchmark dataset, other datasets will not work. \
+    Removes the gap in the middle of the original dataset.
+
+    Args:
+        img_path: A path to the input .mat file containing imagery.
+        ref_path: A path to the input .mat file containing reference.
+        out_shape: Tuple of three values (h, w, b), which are used as the \
+        shape of output imagery raster. Needs to be compatible with selected \
+        size of tiles.
+
+    Returns:
+        A dictionary containing imagery, (reference), crs and transform.
+    """
+    out_dict = {}
+
+    raster_orig = loadmat(img_path)
+    raster_orig_arr = raster_orig['pavia']
+    # removes gap in the input dataset.
+    imagery = np.zeros(out_shape, dtype=np.uint16)
+    imagery[:, :223, :] = raster_orig_arr[:out_shape[0], :223, :out_shape[2]]
+    imagery[:, 605-(1096-out_shape[1]):, :] = raster_orig_arr[
+        :out_shape[0], 224:, :out_shape[2]]
+    out_dict['imagery'] = imagery
+
+    # Add the reference dataset when used for training
+    if ref_path:
+        raster_gt = loadmat(ref_path)
+        raster_gt_arr = raster_gt['pavia_gt'][:, :, None]
+        reference = np.zeros([out_shape[0], out_shape[1], 1], dtype=np.uint8)
+        reference[:, :223, :] = raster_gt_arr[:out_shape[0], :223, :]
+        reference[:, 605-(1096-out_shape[1]):, :] = raster_gt_arr[
+            :out_shape[0], 224:, :]
+        out_dict['reference'] = reference
+
+    # Add empty geolocation values for compatibility reasons
+    out_dict['crs'] = {}
+    out_dict['transform'] = {}
     return out_dict
 
 
