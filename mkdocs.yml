@@ -1,0 +1,18 @@
+site_name: ETRAINEE-M4-utils Docs
+
+theme:
+  name: "material"
+
+plugins:
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          paths: [src]
+
+nav:
+  - index.md
+  - tutorials.md
+  - how-to-guides.md
+  - reference.md
+  - explanation.md
