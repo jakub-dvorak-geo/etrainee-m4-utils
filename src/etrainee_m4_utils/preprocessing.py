@@ -15,23 +15,6 @@ import rasterio
 from scipy.io import loadmat
 
 
-""" --delete
-class Image_reader:
-    "Read the imagery into RAM."
-
-    def __init__(self, train_dir, reference_dir, is_training=False,
-                 nodata_img=[], nodata_gt=0):
-        "Initialise the class with required data."
-        self.is_training = is_training
-        self.train_dir = train_dir
-        self.nodata_img = nodata_img
-        if self.is_training:
-            self.reference_dir = reference_dir
-            self.nodata_gt = nodata_gt
-        pass
-"""
-
-
 class Image_tiler:
     """Tile imagery in RAM for use in convolutional neural nets."""
 
@@ -93,97 +76,19 @@ class Image_tiler:
                     col_start:col_start+self.out_shape[1], :]
                 idx += 1
         return self.tiles_arr
+    
+    def process_tiles(self, return_tile_dims=False):
+        self.crop_image()
+        self.tile_image()
 
-
-def run_tiling(in_arr, out_shape=(256, 256), out_overlap=128, offset=(0, 0)):
-    """Tile the image."""
-    dataset = Image_tiler(in_arr, out_shape, out_overlap, offset)
-    dataset.crop_image()
-    dataset.tile_image()
-    tiles_arr = dataset.tiles_arr
-    del dataset
-    return tiles_arr
-
-
-def return_dimensions(in_arr, out_shape=(256, 256), out_overlap=128,
-                      offset=(0, 0)):
-    """Return the tiled dimensions."""
-    dataset = Image_tiler(in_arr, out_shape, out_overlap, offset)
-    dataset.crop_image()
-    dataset.tile_image()
-
-    dims = {
-        'tiles_num': (dataset.tiles_num_ver, dataset.tiles_num_hor),
-        'cropped_shape': dataset.crop_arr.shape
-    }
-    del dataset
-    return dims
-
-
-def run_tiling_dims(in_arr, out_shape=(256, 256), out_overlap=128,
-                    offset=(0, 0)):
-    """Tile the image."""
-    dataset = Image_tiler(in_arr, out_shape, out_overlap, offset)
-    dataset.crop_image()
-    dataset.tile_image()
-
-    tiles_arr = dataset.tiles_arr
-    dims = {
-        'tiles_num': (dataset.tiles_num_ver, dataset.tiles_num_hor),
-        'cropped_shape': dataset.crop_arr.shape
-    }
-
-    del dataset
-    out_dict = {'imagery': tiles_arr, 'dimensions': dims}
-    return out_dict
-
-
-def tile_training(in_dict, shape, overlap, offset=(0, 0)):
-    """Tile the imagery for training."""
-    tiled_imagery = run_tiling_dims(in_dict['imagery'], out_shape=shape,
-                                    out_overlap=overlap, offset=offset)
-    tiled_reference = run_tiling_dims(in_dict['reference'], out_shape=shape,
-                                      out_overlap=overlap, offset=offset)
-    out_dict = {
-        'imagery': tiled_imagery['imagery'],
-        'reference': tiled_reference['imagery']}
-    return out_dict
-
-
-def filter_useful_tiles(arr_dict, nodata_vals=[], min_usable_area=1.,
-                        is_training=False, nodata_gt=0):
-    """Filter only tiles with reference information."""
-    idxs_keep = []
-
-    if is_training:
-        for idx, tile in enumerate(zip(arr_dict['imagery'],
-                                       arr_dict['reference'])):
-            ref_unique = np.unique(tile[1]).tolist()
-            if nodata_gt in ref_unique:
-                ref_unique.remove(nodata_gt)
-                if len(ref_unique) > 0:
-                    idxs_keep.append(idx)
-            else:
-                idxs_keep.append(idx)
-
-        arr_dict = {
-            'imagery': arr_dict['imagery'][idxs_keep],
-            'reference': arr_dict['reference'][idxs_keep]
+        if return_tile_dims:
+            tile_dims = {
+                'tiles_num': (self.tiles_num_ver, self.tiles_num_hor),
+                'cropped_shape': self.crop_arr.shape
             }
-
-    else:
-        for idx, tile in enumerate(arr_dict['imagery']):
-            ref_unique = np.unique(tile).tolist()
-            if nodata_vals[0] in ref_unique:
-                ref_unique.remove(nodata_vals[0])
-                if len(ref_unique) > 0:
-                    idxs_keep.append(idx)
-            else:
-                idxs_keep.append(idx)
-
-        arr_dict = {'imagery': arr_dict['imagery'][idxs_keep]}
-
-    return arr_dict
+            return self.tiles_arr, tile_dims
+        else:
+            return self.tiles_arr
 
 
 def normalize_tiles(in_dict, nodata_vals=[], is_training=False):
@@ -298,7 +203,7 @@ def read_pavia_centre(img_path: str, ref_path: str = None,
     raster_orig = loadmat(img_path)
     raster_orig_arr = raster_orig['pavia']
     # removes gap in the input dataset.
-    imagery = np.zeros(out_shape, dtype=np.uint16)
+    imagery: np.ndarray = np.zeros(out_shape, dtype=np.uint16)
     imagery[:, :223, :] = raster_orig_arr[:out_shape[0], :223, :out_shape[2]]
     imagery[:, 605-(1096-out_shape[1]):, :] = raster_orig_arr[
         :out_shape[0], 224:, :out_shape[2]]
@@ -308,15 +213,83 @@ def read_pavia_centre(img_path: str, ref_path: str = None,
     if ref_path:
         raster_gt = loadmat(ref_path)
         raster_gt_arr = raster_gt['pavia_gt'][:, :, None]
-        reference = np.zeros([out_shape[0], out_shape[1], 1], dtype=np.uint8)
+        reference: np.ndarray = np.zeros([out_shape[0], out_shape[1], 1],
+                                         dtype=np.uint8)
         reference[:, :223, :] = raster_gt_arr[:out_shape[0], :223, :]
         reference[:, 605-(1096-out_shape[1]):, :] = raster_gt_arr[
             :out_shape[0], 224:, :]
         out_dict['reference'] = reference
 
     # Add empty geolocation values for compatibility reasons
-    out_dict['crs'] = {}
-    out_dict['transform'] = {}
+    out_dict['crs'] = None
+    out_dict['transform'] = None
+    return out_dict
+
+
+def split_into_tiles(in_data: dict, tile_shape: tuple[int] = (256, 256),
+                     tile_overlap: int = 128,
+                     offset: tuple[int] = (0, 0)) -> dict:
+    """Splits the imagery into tiles for training/imference. Necessary for
+    memory and training reasons.
+
+    Args:
+        in_data: Dictionary containing the relevant data arrays.
+        tile_shape: Tuple of two values (h, w), which are used as the \
+            shape of individual tiles.
+        tile_overlap: By how many pixels do individual tiles overlap.
+        offset: [NOT IMPLEMENTED] Tuple of two values for movement in \
+            height and width.
+
+    Returns:
+        A dictionary containing tiled imagery, (reference), crs and transform.
+    """
+    # copy crs and transform directly from input to output
+    out_dict: dict = {'crs': in_data['crs'], 'transform': in_data['transform']}
+
+    # Raise error if trying to use offset
+    if offset != (0, 0):
+        raise NotImplementedError('Offseting is not currently implemented.')
+
+    # Tile imagery in the input dataset
+    img_tile_processor = Image_tiler(in_data['imagery'], tile_shape,
+                                     tile_overlap, offset)
+    tile_arr, tile_dims = img_tile_processor.process_tiles(True)
+    out_dict['imagery'] = tile_arr
+    out_dict.update(tile_dims)
+
+    # If the input dataset contains reference data, tile it too
+    if in_data['reference'] is not None:
+        ref_tile_processor = Image_tiler(in_data['reference'], tile_shape,
+                                         tile_overlap, offset)
+        out_dict['reference'] = ref_tile_processor.process_tiles(False)
+    return out_dict
+
+
+def remove_nodata_tiles(in_data: dict, nodata_val: int = 0,
+                        min_area: float = 1.) -> dict:
+    """Removes tiles without any reference pixels.
+
+    Args:
+        in_data: Dictionary containing the relevant tile arrays.
+        nodata_ref: Nodata value in the reference raster.
+        min_area: [NOT IMPLEMENTED]
+
+    Returns:
+        A dictionary containing tiled imagery, (reference), crs and transform.
+    """
+
+    if min_area != 1.0:
+        raise NotImplementedError('Minimal area is not currently implemented.')
+
+    out_dict: dict = {key: in_data[key] for key in
+                      ['crs', 'transform', 'tiles_num', 'cropped_shape']}
+
+    mask: np.ndarray = np.any(in_data['reference'] != nodata_val,
+                              axis=(1, 2, 3))
+    # Use the mask to filter the array
+    out_dict['imagery'] = in_data['imagery'][mask]
+    out_dict['reference'] = in_data['reference'][mask]
+
     return out_dict
 
 
@@ -324,10 +297,40 @@ def main():
     imagery_path = 'E:/datasets/etrainee/BL_202008_imagery.tif'
     reference_path = 'E:/datasets/etrainee/BL_202008_reference.tif'
 
-    loaded_img = read_rasterio(imagery_path, reference_path)
-    print(loaded_img)
-    print(loaded_img['imagery'].shape)
-    print(loaded_img['reference'].shape)
+    def _test_rasterio(img_path, ref_path):
+        loaded_img = read_rasterio(img_path, ref_path)
+        print('-------------------------------------------')
+        print('Test rasterio')
+        print(loaded_img.keys())
+        print(loaded_img['imagery'].shape)
+        print(loaded_img['reference'].shape)
+        return loaded_img
+
+    def _test_split_into_tiles(img_path, ref_path, t_shp, t_overlap):
+        loaded_raster = _test_rasterio(img_path, ref_path)
+        tiles = split_into_tiles(loaded_raster, t_shp, t_overlap)
+        print('-------------------------------------------')
+        print('Test split into tiles')
+        print(tiles.keys())
+        print(tiles['imagery'].shape)
+        print(tiles['reference'].shape)
+        return tiles
+
+    def _test_remove_nodata(img_path, ref_path, t_shp, t_overlap):
+        tiles = _test_split_into_tiles(img_path, ref_path, t_shp, t_overlap)
+        filtered = remove_nodata_tiles(tiles, nodata_val=0)
+        print('-------------------------------------------')
+        print('Test remove nodata tiles')
+        print(filtered.keys())
+        print(filtered['imagery'].shape)
+        print(filtered['reference'].shape)
+        return filtered
+
+    tile_shape = (64, 64)
+    tile_overlap = 32
+    # _test_rasterio(imagery_path, reference_path)
+    # _test_split_into_tiles(imagery_path, reference_path, tile_shape, tile_overlap)
+    _test_remove_nodata(imagery_path, reference_path, tile_shape, tile_overlap)
 
 
 if __name__ == '__main__':
