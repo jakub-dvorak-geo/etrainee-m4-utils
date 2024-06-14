@@ -220,12 +220,6 @@ def show_classified(hs_img, gt_img, class_img, ds_name='pavia_centre'):
     _class_show(class_img, 'Classified data', ds_name=ds_name)
 
 
-def sec_to_hms(sec):
-    """Convert seconds to hours, minutes, seconds."""
-    ty_res = gmtime(sec)
-    res = strftime("%Hh, %Mm, %Ss", ty_res)
-    return str(res)
-
 # --------------------------------------------------------------------
 # rewritten functions
 
@@ -237,7 +231,7 @@ def confusion_matrix(reference: np.ndarray, predict: np.ndarray,
 
     Args:
         reference: Ground truth (correct) target values of shape (n_samples,)
-        predict: Estimated targets as returned by a classifier with shape 
+        predict: Estimated targets as returned by a classifier with shape
             (n_samples,).
         ds_name: String used to pull apropriate class names. To get valid
             values, check etrainee_m4_utils.visualisation.ds_name_values
@@ -268,3 +262,15 @@ def confusion_matrix(reference: np.ndarray, predict: np.ndarray,
     ax.tick_params(axis='x', labelrotation=90)
 
     plt.show()
+
+
+def sec_to_hms(sec: int) -> str:
+    """Convert number of seconds to 'hours, minutes, seconds'.
+
+    Args:
+        sec: number of seconds to convert.
+
+    Returns:
+        A string representation of the number of seconds.
+    """
+    return strftime("%Hh, %Mm, %Ss", gmtime(sec)) 
