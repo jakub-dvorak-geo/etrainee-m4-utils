@@ -11,8 +11,14 @@ plugins:
           paths: [src]
 
 nav:
-  - index.md
+  - Home: 'index.md'
 #  - tutorials.md
 #  - how-to-guides.md
-  - reference.md
+  - API Reference:
+      - Overview: reference.md
+      - Submodules:
+        - 'reference/preprocessing.md'
+        - 'reference/postprocessing.md'
+        - 'reference/visualisation.md'
+        - 'reference/hyperspectral.md'
 #  - explanation.md
