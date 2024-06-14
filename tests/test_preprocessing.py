@@ -9,6 +9,7 @@ module_path = os.path.abspath(os.path.join(os.path.dirname(__file__),
                                            '../src/etrainee_m4_utils'))
 sys.path.append(module_path)
 import preprocessing
+import image_preprocessing
 
 
 class TestPreprocessing(unittest.TestCase):
@@ -106,6 +107,23 @@ class TestPreprocessing(unittest.TestCase):
 
     # -----------------------------------------------------------------
     # Testing the split_into_tiles method
+
+    # -----------------------------------------------------------------
+    # Testing FutureWarnings in image_processing
+    # Load data
+    def test_future_warning(self):
+        with self.assertWarns(FutureWarning):
+            loaded_data = image_preprocessing.read_gdal(self.img_path,
+                                                        self.ref_path)
+        with self.assertWarns(FutureWarning):
+            image_preprocessing.read_gdal_with_geoinfo(self.img_path)
+        # with self.assertWarns(FutureWarning):
+        #    image_preprocessing.read_pavia_centre()
+        with self.assertWarns(FutureWarning):
+            tiles = image_preprocessing.tile_training(loaded_data,
+                                                      (64, 64), 32)
+        with self.assertWarns(FutureWarning):
+            image_preprocessing.filter_useful_tiles(tiles, nodata_vals=[0])
 
 
 """
