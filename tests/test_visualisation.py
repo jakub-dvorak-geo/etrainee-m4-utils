@@ -45,8 +45,11 @@ class TestPreprocessing(unittest.TestCase):
     # -----------------------------------------------------------------
     # Testing the confusion_matrix method
     def test_confusion_matrix(self):
-        #visualisation.confusion_matrix()
-        pass
+        def random_generated(arr_len):
+            return np.round((np.random.rand(arr_len) * 10), 0).astype(int)
+        gt = random_generated(400)
+        pred = random_generated(400)
+        visualisation.confusion_matrix(gt, pred)
 
 
 if __name__ == '__main__':
