@@ -15,12 +15,14 @@ class TestPreprocessing(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
+        # Define paths to test data
         cls.root_path = os.path.dirname(__file__)
         cls.img_path = os.path.join(cls.root_path,
                                     'testdata/test_img.tif')
         cls.ref_path = os.path.join(cls.root_path,
                                     'testdata/test_ref.tif')
 
+        # Check that test data files exist
         if not os.path.exists(cls.img_path):
             raise IOError('Tests cannot run, missing testdata/test.img.tif.')
         if not os.path.exists(cls.ref_path):
@@ -131,13 +133,6 @@ class TestPreprocessing(unittest.TestCase):
             print(reclassed.keys())
             print(reclassed['imagery'].shape)
         return reclassed
-
-    tile_shape = (64, 64)
-    tile_overlap = 32
-    # _test_rasterio(imagery_path, reference_path)
-    # _test_split_into_tiles(imagery_path, reference_path, tile_shape, tile_overlap)
-    # _test_remove_nodata(imagery_path, reference_path, tile_shape, tile_overlap)
-    _test_reclass_tile(imagery_path, None, tile_shape, tile_overlap)
 """
 
 if __name__ == '__main__':
