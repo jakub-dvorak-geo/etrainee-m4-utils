@@ -4,10 +4,13 @@
 
 The module contains the following functions:
 
-- `add(a, b)` - Returns the sum of two numbers.
-- `subtract(a, b)` - Returns the difference of two numbers.
-- `multiply(a, b)` - Returns the product of two numbers.
-- `divide(a, b)` - Returns the quotient of two numbers.
+- `read_rasterio(img_path, ref_path, offset)` - Reads rasterio rasters.
+- `read_pavia_centre(img_path, ref_path, out_shape)` - Reads Pavia city centre
+    dataset from matlab .mat files.
+- `split_into_tiles(in_data, tile_shape, tile_overlap, offset)` - Splits
+    the input rasters into tiles for training/inference.
+- `remove_nodata_tiles(in_data, nodata_val, min_area)` - Remove tiles without 
+    valid reference classes.
 """
 
 import numpy as np
