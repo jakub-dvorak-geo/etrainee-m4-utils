@@ -2,6 +2,27 @@
 import numpy as np
 from osgeo import gdal
 from scipy.io import loadmat
+import warnings
+import functools
+
+
+def future_warning(new_function):
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            warn_msg = 'etrainee_m4_utils.image_preprocessing will be moved \
+to the preprocessing module. This function will be deprecated in \
+v1.0, please switch to '
+            message = warn_msg + new_function
+            warnings.warn(message, FutureWarning)
+            return func(*args, **kwargs)
+        return wrapper
+    return decorator
+
+
+warnings.warn('etrainee_m4_utils.image_preprocessing will be moved \
+to the preprocessing module. This module will be deprecated in \
+v1.0.', FutureWarning)
 
 
 class Image_reader:
@@ -107,6 +128,7 @@ def return_dimensions(in_arr, out_shape=(256, 256), out_overlap=128,
     return dims
 
 
+@future_warning('preprocessing.read_rasterio()')
 def read_gdal(trainingdata_path, referencedata_path):
     """Read data using gdal and transform into numpy array."""
     raster_orig = gdal.Open(trainingdata_path)
@@ -122,6 +144,7 @@ def read_gdal(trainingdata_path, referencedata_path):
     return arr_dict
 
 
+@future_warning('preprocessing.read_rasterio()')
 def read_gdal_with_geoinfo(trainingdata_path, offset=(0, 0)):
     """Read data using gdal and transform into numpy array."""
     def retrieve_geoinfo(img, offset):
@@ -147,6 +170,7 @@ def read_gdal_with_geoinfo(trainingdata_path, offset=(0, 0)):
     return arr_dict
 
 
+@future_warning('preprocessing.read_pavia_centre()')
 def read_pavia_centre(train_path, ref_path=None, out_shape=(1096, 1096, 102)):
 
     raster_orig = loadmat(train_path)
@@ -170,6 +194,7 @@ def read_pavia_centre(train_path, ref_path=None, out_shape=(1096, 1096, 102)):
     return arr_dict
 
 
+@future_warning('preprocessing.split_into_tiles()')
 def run_tiling_dims(in_arr, out_shape=(256, 256), out_overlap=128,
                     offset=(0, 0)):
     """Tile the image."""
@@ -188,6 +213,7 @@ def run_tiling_dims(in_arr, out_shape=(256, 256), out_overlap=128,
     return out_dict
 
 
+@future_warning('preprocessing.split_into_tiles()')
 def tile_training(in_dict, shape, overlap, offset=(0, 0)):
     """Tile the imagery for training."""
     tiled_imagery = run_tiling_dims(in_dict['imagery'], out_shape=shape,
@@ -200,6 +226,7 @@ def tile_training(in_dict, shape, overlap, offset=(0, 0)):
     return out_dict
 
 
+@future_warning('preprocessing.remove_nodata_tiles()')
 def filter_useful_tiles(arr_dict, nodata_vals=[], min_usable_area=1.,
                         is_training=False, nodata_gt=0):
     """Filter only tiles with reference information."""
