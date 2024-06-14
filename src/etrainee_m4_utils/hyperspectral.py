@@ -76,18 +76,22 @@ C:/somepath/pysptools/classifiers/hs_classification.py:19:
 """
 # ajust the _round_threshold parameter accordingly,
 # a smaller value avoid these errors.
-_round_threshold = 7
+# _round_threshold = 7
 
 
 def classify_SAM(M: np.ndarray, E: np.ndarray,
-                 threshold: float = 0.1) -> np.ndarray:
+                 threshold: float = 0.1,
+                 _round_threshold: int = 7) -> np.ndarray:
     """Classify a HSI cube M using the spectral angle mapper
     and a spectral library E.
 
     Args:
-        M: a HSI array of shape=(n_bands, n_samples)
-        E: a spectral library of shape=(n_classes, n_samples)
+        M: a HSI array of shape=(n_samples, n_bands)
+        E: a spectral library of shape=(n_classes, n_bands)
         threshold: threshold for classification (0-1)
+        _round_threshold: [pysptools] If you get invalid value error in arccos,
+            adjust this parameter accordingly - a smaller_value avoids this
+            error (Unsure of whot/how this works, leftover from psyptools).
 
     Returns:
         A classified array
@@ -109,6 +113,7 @@ def classify_SAM(M: np.ndarray, E: np.ndarray,
         mul_T_R[i] = np.multiply(TNA[i], RNA)
     # read above for _round_threshold
     angles = np.arccos(np.round(sum_T_R / mul_T_R, _round_threshold))
+
     if isinstance(threshold, float):
         return _single_value_min(angles, threshold)
     else:
@@ -121,8 +126,8 @@ def classify_SID(M: np.ndarray, E: np.ndarray,
     and a spectral library E.
 
     Args:
-        M: a HSI array of shape=(n_bands, n_samples)
-        E: a spectral library of shape=(n_classes, n_samples)
+        M: a HSI array of shape=(n_samples, n_bands)
+        E: a spectral library of shape=(n_classes, n_bands)
         threshold: threshold for classification (0-1)
 
     Returns:
@@ -143,8 +148,8 @@ def classify_SID(M: np.ndarray, E: np.ndarray,
         pq = q[0:, :] * np.log(q[0:, :] / p[i, :])
         pp = p[i, :] * np.log(p[i, :] / q[0:, :])
         sid[i, :] = np.sum(pp[0:, :] + pq[0:, :], axis=1)
+
     if isinstance(threshold, float):
-        cmap = _single_value_min(sid, threshold)
+        return _single_value_min(sid, threshold)
     else:
         return np.argmin(sid, axis=1), sid
-    return cmap
