@@ -86,8 +86,8 @@ class _Tile_processor:
 
         if return_tile_dims:
             tile_dims = {
-                'tiles_num': (self.tiles_num_ver, self.tiles_num_hor),
-                'cropped_shape': self.crop_arr.shape
+                'num_tiles': (self.tiles_num_ver, self.tiles_num_hor),
+                'shape_cropped': self.crop_arr.shape
             }
             return self.tiles_arr, tile_dims
         else:
@@ -286,7 +286,7 @@ def remove_nodata_tiles(in_data: dict, nodata_val: int = 0,
                                       implemented.')
         # Copy unchanged values from the input dict
         out_dict: dict = {key: in_data[key] for key in
-                          ['crs', 'transform', 'tiles_num', 'cropped_shape']}
+                          ['crs', 'transform', 'num_tiles', 'shape_cropped']}
 
         # Create a mask... true if a tile contains other values than nodata_val
         mask: np.ndarray = np.any(in_data['reference'] != nodata_val,
@@ -315,7 +315,7 @@ def reclass_tiles_zero_one(in_data: dict, nodata_val: int = 65535) -> dict:
         return (arr - arr.min()) / (arr.max() - arr.min())
     # Copy unchanged values from the input dict
     out_dict: dict = {key: in_data[key] for key in
-                      ['crs', 'transform', 'tiles_num', 'cropped_shape']}
+                      ['crs', 'transform', 'num_tiles', 'shape_cropped']}
 
     transposed: np.ndarray = in_data['imagery'].transpose([0, 3, 1, 2])
     transposed[transposed == nodata_val] = 0
