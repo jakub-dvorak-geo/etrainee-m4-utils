@@ -80,7 +80,7 @@ C:/somepath/pysptools/classifiers/hs_classification.py:19:
 
 
 def classify_SAM(M: np.ndarray, E: np.ndarray,
-                 threshold: float = 0.1,
+                 threshold: float = 1.0,
                  _round_threshold: int = 7) -> np.ndarray:
     """Classify a HSI cube M using the spectral angle mapper
     and a spectral library E.
@@ -91,7 +91,7 @@ def classify_SAM(M: np.ndarray, E: np.ndarray,
         threshold: threshold for classification (0-1)
         _round_threshold: [pysptools] If you get invalid value error in arccos,
             adjust this parameter accordingly - a smaller_value avoids this
-            error (Unsure of whot/how this works, leftover from psyptools).
+            error (Unsure of what/how this works, leftover from psyptools).
 
     Returns:
         A classified array
@@ -121,7 +121,7 @@ def classify_SAM(M: np.ndarray, E: np.ndarray,
 
 
 def classify_SID(M: np.ndarray, E: np.ndarray,
-                 threshold: float = 0.1) -> np.ndarray:
+                 threshold: float = 1.0) -> np.ndarray:
     """Classify a HSI cube M using spectral information divergence
     and a spectral library E.
 
