@@ -15,7 +15,7 @@ import rasterio
 from scipy.io import loadmat
 
 
-class Image_tiler:
+class _Tile_processor:
     """Tile imagery in RAM for use in convolutional neural nets."""
 
     def __init__(self, in_arr, out_shape=(256, 256),
@@ -76,7 +76,7 @@ class Image_tiler:
                     col_start:col_start+self.out_shape[1], :]
                 idx += 1
         return self.tiles_arr
-    
+
     def process_tiles(self, return_tile_dims=False):
         self.crop_image()
         self.tile_image()
@@ -243,7 +243,7 @@ def split_into_tiles(in_data: dict, tile_shape: tuple[int] = (256, 256),
     Returns:
         A dictionary containing tiled imagery, (reference), crs and transform.
     """
-    # copy crs and transform directly from input to output
+    # Copy unchanged values from the input dict
     out_dict: dict = {'crs': in_data['crs'], 'transform': in_data['transform']}
 
     # Raise error if trying to use offset
@@ -251,16 +251,16 @@ def split_into_tiles(in_data: dict, tile_shape: tuple[int] = (256, 256),
         raise NotImplementedError('Offseting is not currently implemented.')
 
     # Tile imagery in the input dataset
-    img_tile_processor = Image_tiler(in_data['imagery'], tile_shape,
-                                     tile_overlap, offset)
+    img_tile_processor = _Tile_processor(in_data['imagery'], tile_shape,
+                                         tile_overlap, offset)
     tile_arr, tile_dims = img_tile_processor.process_tiles(True)
     out_dict['imagery'] = tile_arr
     out_dict.update(tile_dims)
 
     # If the input dataset contains reference data, tile it too
-    if in_data['reference'] is not None:
-        ref_tile_processor = Image_tiler(in_data['reference'], tile_shape,
-                                         tile_overlap, offset)
+    if 'reference' in in_data:
+        ref_tile_processor = _Tile_processor(in_data['reference'], tile_shape,
+                                             tile_overlap, offset)
         out_dict['reference'] = ref_tile_processor.process_tiles(False)
     return out_dict
 
@@ -271,80 +271,66 @@ def remove_nodata_tiles(in_data: dict, nodata_val: int = 0,
 
     Args:
         in_data: Dictionary containing the relevant tile arrays.
-        nodata_ref: Nodata value in the reference raster.
+        nodata_val: Nodata value in the reference raster.
         min_area: [NOT IMPLEMENTED]
 
     Returns:
         A dictionary containing tiled imagery, (reference), crs and transform.
     """
+    if 'reference' in in_data:
+        if min_area != 1.0:
+            raise NotImplementedError('Minimal area is not currently \
+                                      implemented.')
+        # Copy unchanged values from the input dict
+        out_dict: dict = {key: in_data[key] for key in
+                          ['crs', 'transform', 'tiles_num', 'cropped_shape']}
 
-    if min_area != 1.0:
-        raise NotImplementedError('Minimal area is not currently implemented.')
+        # Create a mask... true if a tile contains other values than nodata_val
+        mask: np.ndarray = np.any(in_data['reference'] != nodata_val,
+                                  axis=(1, 2, 3))
+        # Use the mask to filter the array
+        out_dict['imagery'] = in_data['imagery'][mask]
+        out_dict['reference'] = in_data['reference'][mask]
 
+        return out_dict
+
+    else:
+        return in_data
+
+
+def reclass_tiles_zero_one(in_data: dict, nodata_val: int = 65535) -> dict:
+    """Normalize values in each tile between 0 and 1.
+
+    Args:
+        in_data: Dictionary containing the relevant tile arrays.
+        nodata_val: Nodata value of the imagery raster.
+
+    Returns:
+        A dictionary containing tiled imagery, (reference), crs and transform.
+    """
+    def _norm_input(arr):
+        return (arr - arr.min()) / (arr.max() - arr.min())
+    # Copy unchanged values from the input dict
     out_dict: dict = {key: in_data[key] for key in
                       ['crs', 'transform', 'tiles_num', 'cropped_shape']}
 
-    mask: np.ndarray = np.any(in_data['reference'] != nodata_val,
-                              axis=(1, 2, 3))
-    # Use the mask to filter the array
-    out_dict['imagery'] = in_data['imagery'][mask]
-    out_dict['reference'] = in_data['reference'][mask]
+    transposed: np.ndarray = in_data['imagery'].transpose([0, 3, 1, 2])
+    transposed[transposed == nodata_val] = 0
+    out_dict['imagery'] = _norm_input(transposed.astype(np.float32))
 
-    return out_dict
+    if 'reference' in in_data:
+        newshape_ref: tuple = in_data['reference'].shape[:-1]
+        reshaped_ref: np.ndarray = in_data['reference'].reshape(newshape_ref)
+        out_dict['reference'] = reshaped_ref.astype(np.int64)
+        unique, counts = np.unique(out_dict['reference'], return_counts=True)
+        return out_dict, unique, counts
+    else:
+        return out_dict
 
 
 def main():
-    imagery_path = 'E:/datasets/etrainee/BL_202008_imagery.tif'
-    reference_path = 'E:/datasets/etrainee/BL_202008_reference.tif'
-
-    def _test_rasterio(img_path, ref_path):
-        loaded_img = read_rasterio(img_path, ref_path)
-        print('-------------------------------------------')
-        print('Test rasterio')
-        print(loaded_img.keys())
-        print(loaded_img['imagery'].shape)
-        print(loaded_img['reference'].shape)
-        return loaded_img
-
-    def _test_split_into_tiles(img_path, ref_path, t_shp, t_overlap):
-        loaded_raster = _test_rasterio(img_path, ref_path)
-        tiles = split_into_tiles(loaded_raster, t_shp, t_overlap)
-        print('-------------------------------------------')
-        print('Test split into tiles')
-        print(tiles.keys())
-        print(tiles['imagery'].shape)
-        print(tiles['reference'].shape)
-        return tiles
-
-    def _test_remove_nodata(img_path, ref_path, t_shp, t_overlap):
-        tiles = _test_split_into_tiles(img_path, ref_path, t_shp, t_overlap)
-        filtered = remove_nodata_tiles(tiles, nodata_val=0)
-        print('-------------------------------------------')
-        print('Test remove nodata tiles')
-        print(filtered.keys())
-        print(filtered['imagery'].shape)
-        print(filtered['reference'].shape)
-        return filtered
-
-    tile_shape = (64, 64)
-    tile_overlap = 32
-    # _test_rasterio(imagery_path, reference_path)
-    # _test_split_into_tiles(imagery_path, reference_path, tile_shape, tile_overlap)
-    _test_remove_nodata(imagery_path, reference_path, tile_shape, tile_overlap)
+    pass
 
 
 if __name__ == '__main__':
     main()
-"""
-    dummy_filename = 'C:\\Users\\dd\\Pictures\\DSC_0084.jpg'
-    dummy_arr = imageio.imread(dummy_filename)  # .astype(np.float32)
-
-    print(dummy_arr.dtype)
-    print(dummy_arr.shape)
-
-    dummy_dataset = Image_tiler(dummy_arr, (256, 256), 128, (0, 0))
-    dummy_crop = dummy_dataset.crop_image()
-    print(dummy_crop.shape)
-    dummy_tiles = dummy_dataset.tile_image()
-    print(dummy_tiles.shape)
-"""
