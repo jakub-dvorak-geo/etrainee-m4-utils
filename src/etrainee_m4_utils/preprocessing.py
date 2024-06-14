@@ -9,7 +9,7 @@ The module contains the following functions:
     dataset from matlab .mat files.
 - `split_into_tiles(in_data, tile_shape, tile_overlap, offset)` - Splits
     the input rasters into tiles for training/inference.
-- `remove_nodata_tiles(in_data, nodata_val, min_area)` - Remove tiles without 
+- `remove_nodata_tiles(in_data, nodata_val, min_area)` - Remove tiles without
     valid reference classes.
 """
 
@@ -326,9 +326,10 @@ def reclass_tiles_zero_one(in_data: dict, nodata_val: int = 65535) -> dict:
         reshaped_ref: np.ndarray = in_data['reference'].reshape(newshape_ref)
         out_dict['reference'] = reshaped_ref.astype(np.int64)
         unique, counts = np.unique(out_dict['reference'], return_counts=True)
-        return out_dict, unique, counts
-    else:
-        return out_dict
+        out_dict['unique'] = unique
+        out_dict['counts'] = counts
+
+    return out_dict
 
 
 def main():
