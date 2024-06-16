@@ -16,6 +16,7 @@ The module contains the following functions:
 import numpy as np
 import rasterio
 from scipy.io import loadmat
+# from sklearn.preprocessing import StandardScaler
 
 
 class _Tile_processor:
@@ -232,7 +233,7 @@ def read_pavia_centre(img_path: str, ref_path: str = None,
 def split_into_tiles(in_data: dict, tile_shape: tuple[int] = (256, 256),
                      tile_overlap: int = 128,
                      offset: tuple[int] = (0, 0)) -> dict:
-    """Splits the imagery into tiles for training/imference. Necessary for
+    """Splits the imagery into tiles for training/inference. Necessary for
     memory and training reasons.
 
     Args:
@@ -247,7 +248,9 @@ def split_into_tiles(in_data: dict, tile_shape: tuple[int] = (256, 256),
         A dictionary containing tiled imagery, (reference), crs and transform.
     """
     # Copy unchanged values from the input dict
-    out_dict: dict = {'crs': in_data['crs'], 'transform': in_data['transform']}
+    out_dict: dict = {key: in_data[key] for key in
+                      ['crs', 'transform', 'num_tiles', 'shape_cropped']
+                      if key in in_data}
 
     # Raise error if trying to use offset
     if offset != (0, 0):
@@ -286,7 +289,8 @@ def remove_nodata_tiles(in_data: dict, nodata_val: int = 0,
                                       implemented.')
         # Copy unchanged values from the input dict
         out_dict: dict = {key: in_data[key] for key in
-                          ['crs', 'transform', 'num_tiles', 'shape_cropped']}
+                          ['crs', 'transform', 'num_tiles', 'shape_cropped']
+                          if key in in_data}
 
         # Create a mask... true if a tile contains other values than nodata_val
         mask: np.ndarray = np.any(in_data['reference'] != nodata_val,
@@ -301,7 +305,8 @@ def remove_nodata_tiles(in_data: dict, nodata_val: int = 0,
         return in_data
 
 
-def reclass_tiles_zero_one(in_data: dict, nodata_val: int = 65535) -> dict:
+'''
+def _reclass_tiles_zero_one(in_data: dict, nodata_val: int = 65535) -> dict:
     """Normalize values in each tile between 0 and 1.
 
     Args:
@@ -330,6 +335,25 @@ def reclass_tiles_zero_one(in_data: dict, nodata_val: int = 65535) -> dict:
         out_dict['counts'] = counts
 
     return out_dict
+
+
+def _standard_scaler(in_data: dict, nodata_val: int = 65535) -> dict:
+    """
+
+    Args:
+        in_data: Dictionary containing the relevant tile arrays.
+        nodata_val: Nodata value of the imagery raster.
+
+    Returns:
+        A dictionary containing tiled imagery, (reference), crs and transform.
+    """
+
+    # StandardScaler()
+
+    if 'reference' in in_data:
+        out_dict['reference'] = in_data['reference']
+    return out_dict
+'''
 
 
 def main():
