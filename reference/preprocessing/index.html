@@ -1,0 +1,1551 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../postprocessing/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.26">
+    
+    
+      
+        <title>Preprocessing - ETRAINEE-M4-utils Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.6543a935.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#etrainee_m4_utils.preprocessing" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="ETRAINEE-M4-utils Docs" class="md-header__button md-logo" aria-label="ETRAINEE-M4-utils Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ETRAINEE-M4-utils Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Preprocessing
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="ETRAINEE-M4-utils Docs" class="md-nav__button md-logo" aria-label="ETRAINEE-M4-utils Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    ETRAINEE-M4-utils Docs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    API Reference
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            API Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Submodules
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            Submodules
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Preprocessing
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Preprocessing
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#etrainee_m4_utils.preprocessing" class="md-nav__link">
+    <span class="md-ellipsis">
+      preprocessing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#etrainee_m4_utils.preprocessing.normalize_tiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      normalize_tiles
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#etrainee_m4_utils.preprocessing.normalize_tiles_1d" class="md-nav__link">
+    <span class="md-ellipsis">
+      normalize_tiles_1d
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#etrainee_m4_utils.preprocessing.normalize_tiles_3d" class="md-nav__link">
+    <span class="md-ellipsis">
+      normalize_tiles_3d
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#etrainee_m4_utils.preprocessing.read_pavia_centre" class="md-nav__link">
+    <span class="md-ellipsis">
+      read_pavia_centre
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#etrainee_m4_utils.preprocessing.read_rasterio" class="md-nav__link">
+    <span class="md-ellipsis">
+      read_rasterio
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#etrainee_m4_utils.preprocessing.remove_nodata_tiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      remove_nodata_tiles
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#etrainee_m4_utils.preprocessing.split_into_tiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      split_into_tiles
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../postprocessing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Postprocessing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../visualisation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Visualisation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hyperspectral/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Hyperspectral
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#etrainee_m4_utils.preprocessing" class="md-nav__link">
+    <span class="md-ellipsis">
+      preprocessing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#etrainee_m4_utils.preprocessing.normalize_tiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      normalize_tiles
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#etrainee_m4_utils.preprocessing.normalize_tiles_1d" class="md-nav__link">
+    <span class="md-ellipsis">
+      normalize_tiles_1d
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#etrainee_m4_utils.preprocessing.normalize_tiles_3d" class="md-nav__link">
+    <span class="md-ellipsis">
+      normalize_tiles_3d
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#etrainee_m4_utils.preprocessing.read_pavia_centre" class="md-nav__link">
+    <span class="md-ellipsis">
+      read_pavia_centre
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#etrainee_m4_utils.preprocessing.read_rasterio" class="md-nav__link">
+    <span class="md-ellipsis">
+      read_rasterio
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#etrainee_m4_utils.preprocessing.remove_nodata_tiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      remove_nodata_tiles
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#etrainee_m4_utils.preprocessing.split_into_tiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      split_into_tiles
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  <h1>Preprocessing</h1>
+
+<p>This part of the project documentation focuses on
+an <strong>information-oriented</strong> approach. Use it as a
+reference for the technical implementation of the
+<code>ETRAINEE-M4-utils</code> project code.</p>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="etrainee_m4_utils.preprocessing"></a>
+    <div class="doc doc-contents first">
+
+      <p>Preprocess imagery in memory for use in convolutional neural nets.</p>
+<p>The module contains the following functions:</p>
+<ul>
+<li><code>read_rasterio(img_path, ref_path, offset)</code> - Reads rasterio rasters.</li>
+<li><code>read_pavia_centre(img_path, ref_path, out_shape)</code> - Reads Pavia city centre
+    dataset from matlab .mat files.</li>
+<li><code>split_into_tiles(in_data, tile_shape, tile_overlap, offset)</code> - Splits
+    the input rasters into tiles for training/inference.</li>
+<li><code>remove_nodata_tiles(in_data, nodata_val, min_area)</code> - Remove tiles without
+    valid reference classes.</li>
+</ul>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="etrainee_m4_utils.preprocessing.normalize_tiles" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">normalize_tiles</span><span class="p">(</span><span class="n">in_dict</span><span class="p">,</span> <span class="n">nodata_vals</span><span class="o">=</span><span class="p">[],</span> <span class="n">is_training</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Normalize values between 0 and 1.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>src\etrainee_m4_utils\preprocessing.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">normalize_tiles</span><span class="p">(</span><span class="n">in_dict</span><span class="p">,</span> <span class="n">nodata_vals</span><span class="o">=</span><span class="p">[],</span> <span class="n">is_training</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Normalize values between 0 and 1.&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">normalize_input</span><span class="p">(</span><span class="n">arr</span><span class="p">):</span>
+        <span class="c1"># normalize all values in array</span>
+        <span class="n">arr_norm</span> <span class="o">=</span> <span class="p">(</span><span class="n">arr</span> <span class="o">-</span> <span class="n">arr</span><span class="o">.</span><span class="n">min</span><span class="p">())</span> <span class="o">/</span> <span class="p">(</span><span class="n">arr</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">arr</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">arr_norm</span>
+    <span class="n">arr_dict</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">arr_dict</span><span class="p">[</span><span class="s1">&#39;imagery&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">in_dict</span><span class="p">[</span><span class="s1">&#39;imagery&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">transpose</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">nodata_val</span> <span class="ow">in</span> <span class="n">nodata_vals</span><span class="p">:</span>
+        <span class="n">arr_dict</span><span class="p">[</span><span class="s1">&#39;imagery&#39;</span><span class="p">][</span><span class="n">arr_dict</span><span class="p">[</span><span class="s1">&#39;imagery&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">nodata_val</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">arr_dict</span><span class="p">[</span><span class="s1">&#39;imagery&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">normalize_input</span><span class="p">(</span><span class="n">arr_dict</span><span class="p">[</span><span class="s1">&#39;imagery&#39;</span><span class="p">]</span>
+                                          <span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">is_training</span><span class="p">:</span>
+        <span class="n">ref_newshape</span> <span class="o">=</span> <span class="n">in_dict</span><span class="p">[</span><span class="s1">&#39;reference&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">arr_dict</span><span class="p">[</span><span class="s1">&#39;reference&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">in_dict</span><span class="p">[</span><span class="s1">&#39;reference&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">ref_newshape</span><span class="p">)</span>
+        <span class="n">arr_dict</span><span class="p">[</span><span class="s1">&#39;reference&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">arr_dict</span><span class="p">[</span><span class="s1">&#39;reference&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+        <span class="n">unique</span><span class="p">,</span> <span class="n">counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">arr_dict</span><span class="p">[</span><span class="s1">&#39;reference&#39;</span><span class="p">],</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">arr_dict</span><span class="p">,</span> <span class="n">unique</span><span class="p">,</span> <span class="n">counts</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">arr_dict</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="etrainee_m4_utils.preprocessing.normalize_tiles_1d" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">normalize_tiles_1d</span><span class="p">(</span><span class="n">in_dict</span><span class="p">,</span> <span class="n">nodata_vals</span><span class="o">=</span><span class="p">[],</span> <span class="n">is_training</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Normalize values between 0 and 1.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>src\etrainee_m4_utils\preprocessing.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">normalize_tiles_1d</span><span class="p">(</span><span class="n">in_dict</span><span class="p">,</span> <span class="n">nodata_vals</span><span class="o">=</span><span class="p">[],</span> <span class="n">is_training</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Normalize values between 0 and 1.&quot;&quot;&quot;</span>
+    <span class="n">arr_dict</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">is_training</span><span class="p">:</span>
+        <span class="n">norm_dict</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">normalize_tiles</span><span class="p">(</span><span class="n">in_dict</span><span class="p">,</span> <span class="n">nodata_vals</span><span class="p">,</span> <span class="n">is_training</span><span class="p">)</span>
+        <span class="n">arr_dict</span><span class="p">[</span><span class="s1">&#39;imagery&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">norm_dict</span><span class="p">[</span><span class="s1">&#39;imagery&#39;</span><span class="p">][:,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">arr_dict</span><span class="p">[</span><span class="s1">&#39;reference&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">norm_dict</span><span class="p">[</span><span class="s1">&#39;reference&#39;</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">arr_dict</span><span class="p">[</span><span class="s1">&#39;reference&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">arr_dict</span><span class="p">[</span><span class="s1">&#39;reference&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">unique</span><span class="p">,</span> <span class="n">counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">arr_dict</span><span class="p">[</span><span class="s1">&#39;reference&#39;</span><span class="p">],</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">arr_dict</span><span class="p">,</span> <span class="n">unique</span><span class="p">,</span> <span class="n">counts</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">norm_dict</span> <span class="o">=</span> <span class="n">normalize_tiles</span><span class="p">(</span><span class="n">in_dict</span><span class="p">,</span> <span class="n">nodata_vals</span><span class="p">,</span> <span class="n">is_training</span><span class="p">)</span>
+        <span class="n">arr_dict</span><span class="p">[</span><span class="s1">&#39;imagery&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">norm_dict</span><span class="p">[</span><span class="s1">&#39;imagery&#39;</span><span class="p">][:,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">arr_dict</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="etrainee_m4_utils.preprocessing.normalize_tiles_3d" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">normalize_tiles_3d</span><span class="p">(</span><span class="n">in_dict</span><span class="p">,</span> <span class="n">nodata_vals</span><span class="o">=</span><span class="p">[],</span> <span class="n">is_training</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Normalize values between 0 and 1.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>src\etrainee_m4_utils\preprocessing.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">normalize_tiles_3d</span><span class="p">(</span><span class="n">in_dict</span><span class="p">,</span> <span class="n">nodata_vals</span><span class="o">=</span><span class="p">[],</span> <span class="n">is_training</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Normalize values between 0 and 1.&quot;&quot;&quot;</span>
+    <span class="n">arr_dict</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">is_training</span><span class="p">:</span>
+        <span class="n">norm_dict</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">normalize_tiles</span><span class="p">(</span><span class="n">in_dict</span><span class="p">,</span> <span class="n">nodata_vals</span><span class="p">,</span> <span class="n">is_training</span><span class="p">)</span>
+        <span class="n">arr_dict</span><span class="p">[</span><span class="s1">&#39;imagery&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">norm_dict</span><span class="p">[</span><span class="s1">&#39;imagery&#39;</span><span class="p">][:,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="p">:]</span>
+        <span class="n">arr_dict</span><span class="p">[</span><span class="s1">&#39;reference&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">norm_dict</span><span class="p">[</span><span class="s1">&#39;reference&#39;</span><span class="p">]</span>
+        <span class="n">unique</span><span class="p">,</span> <span class="n">counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">arr_dict</span><span class="p">[</span><span class="s1">&#39;reference&#39;</span><span class="p">],</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">arr_dict</span><span class="p">,</span> <span class="n">unique</span><span class="p">,</span> <span class="n">counts</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">norm_dict</span> <span class="o">=</span> <span class="n">normalize_tiles</span><span class="p">(</span><span class="n">in_dict</span><span class="p">,</span> <span class="n">nodata_vals</span><span class="p">,</span> <span class="n">is_training</span><span class="p">)</span>
+        <span class="n">arr_dict</span><span class="p">[</span><span class="s1">&#39;imagery&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">norm_dict</span><span class="p">[</span><span class="s1">&#39;imagery&#39;</span><span class="p">][:,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="p">:]</span>
+        <span class="k">return</span> <span class="n">arr_dict</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="etrainee_m4_utils.preprocessing.read_pavia_centre" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">read_pavia_centre</span><span class="p">(</span><span class="n">img_path</span><span class="p">,</span> <span class="n">ref_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">out_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1096</span><span class="p">,</span> <span class="mi">1096</span><span class="p">,</span> <span class="mi">102</span><span class="p">))</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Read imagery for training or inference from matlab matrices of the     Pavia City Centre benchmark dataset, other datasets will not work.     Removes the gap in the middle of the original dataset.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code>img_path</code></td>
+            <td>
+                  <code>str</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A path to the input .mat file containing imagery.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>ref_path</code></td>
+            <td>
+                  <code>str</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A path to the input .mat file containing reference.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>out_shape</code></td>
+            <td>
+                  <code>tuple</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Tuple of three values (h, w, b), which are used as the         shape of output imagery raster. Needs to be compatible with selected         size of tiles.</p>
+              </div>
+            </td>
+            <td>
+                  <code>(1096, 1096, 102)</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code>dict</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A dictionary containing imagery, (reference), crs and transform.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+            <details class="quote">
+              <summary>Source code in <code>src\etrainee_m4_utils\preprocessing.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">read_pavia_centre</span><span class="p">(</span><span class="n">img_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">ref_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                      <span class="n">out_shape</span><span class="p">:</span> <span class="nb">tuple</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1096</span><span class="p">,</span> <span class="mi">1096</span><span class="p">,</span> <span class="mi">102</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Read imagery for training or inference from matlab matrices of the \</span>
+<span class="sd">    Pavia City Centre benchmark dataset, other datasets will not work. \</span>
+<span class="sd">    Removes the gap in the middle of the original dataset.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        img_path: A path to the input .mat file containing imagery.</span>
+<span class="sd">        ref_path: A path to the input .mat file containing reference.</span>
+<span class="sd">        out_shape: Tuple of three values (h, w, b), which are used as the \</span>
+<span class="sd">        shape of output imagery raster. Needs to be compatible with selected \</span>
+<span class="sd">        size of tiles.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A dictionary containing imagery, (reference), crs and transform.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">out_dict</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="n">raster_orig</span> <span class="o">=</span> <span class="n">loadmat</span><span class="p">(</span><span class="n">img_path</span><span class="p">)</span>
+    <span class="n">raster_orig_arr</span> <span class="o">=</span> <span class="n">raster_orig</span><span class="p">[</span><span class="s1">&#39;pavia&#39;</span><span class="p">]</span>
+    <span class="c1"># removes gap in the input dataset.</span>
+    <span class="n">imagery</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">out_shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint16</span><span class="p">)</span>
+    <span class="n">imagery</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">223</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">raster_orig_arr</span><span class="p">[:</span><span class="n">out_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">:</span><span class="mi">223</span><span class="p">,</span> <span class="p">:</span><span class="n">out_shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
+    <span class="n">imagery</span><span class="p">[:,</span> <span class="mi">605</span><span class="o">-</span><span class="p">(</span><span class="mi">1096</span><span class="o">-</span><span class="n">out_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">raster_orig_arr</span><span class="p">[</span>
+        <span class="p">:</span><span class="n">out_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">224</span><span class="p">:,</span> <span class="p">:</span><span class="n">out_shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
+    <span class="n">out_dict</span><span class="p">[</span><span class="s1">&#39;imagery&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">imagery</span>
+
+    <span class="c1"># Add the reference dataset when used for training</span>
+    <span class="k">if</span> <span class="n">ref_path</span><span class="p">:</span>
+        <span class="n">raster_gt</span> <span class="o">=</span> <span class="n">loadmat</span><span class="p">(</span><span class="n">ref_path</span><span class="p">)</span>
+        <span class="n">raster_gt_arr</span> <span class="o">=</span> <span class="n">raster_gt</span><span class="p">[</span><span class="s1">&#39;pavia_gt&#39;</span><span class="p">][:,</span> <span class="p">:,</span> <span class="kc">None</span><span class="p">]</span>
+        <span class="n">reference</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">out_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">out_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1</span><span class="p">],</span>
+                                         <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+        <span class="n">reference</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">223</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">raster_gt_arr</span><span class="p">[:</span><span class="n">out_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">:</span><span class="mi">223</span><span class="p">,</span> <span class="p">:]</span>
+        <span class="n">reference</span><span class="p">[:,</span> <span class="mi">605</span><span class="o">-</span><span class="p">(</span><span class="mi">1096</span><span class="o">-</span><span class="n">out_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">raster_gt_arr</span><span class="p">[</span>
+            <span class="p">:</span><span class="n">out_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">224</span><span class="p">:,</span> <span class="p">:]</span>
+        <span class="n">out_dict</span><span class="p">[</span><span class="s1">&#39;reference&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">reference</span>
+
+    <span class="c1"># Add empty geolocation values for compatibility reasons</span>
+    <span class="n">out_dict</span><span class="p">[</span><span class="s1">&#39;crs&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">out_dict</span><span class="p">[</span><span class="s1">&#39;transform&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">return</span> <span class="n">out_dict</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="etrainee_m4_utils.preprocessing.read_rasterio" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">read_rasterio</span><span class="p">(</span><span class="n">img_path</span><span class="p">,</span> <span class="n">ref_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Read imagery for training or inference from any rasters compatible with    rasterio/GDAL. When used for training, provide a ref_path.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code>img_path</code></td>
+            <td>
+                  <code>str</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A path to the input file containing imagery.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>ref_path</code></td>
+            <td>
+                  <code>str</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A path to the input file containing reference.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>offset</code></td>
+            <td>
+                  <code>tuple</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>[NOT IMPLEMENTED] Tuple of two values for movement in             height and width.</p>
+              </div>
+            </td>
+            <td>
+                  <code>(0, 0)</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code>dict</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A dictionary containing imagery, (reference), crs and transform.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+            <details class="quote">
+              <summary>Source code in <code>src\etrainee_m4_utils\preprocessing.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">read_rasterio</span><span class="p">(</span><span class="n">img_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">ref_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                  <span class="n">offset</span><span class="p">:</span> <span class="nb">tuple</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Read imagery for training or inference from any rasters compatible with\</span>
+<span class="sd">    rasterio/GDAL. When used for training, provide a ref_path.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        img_path: A path to the input file containing imagery.</span>
+<span class="sd">        ref_path: A path to the input file containing reference.</span>
+<span class="sd">        offset: [NOT IMPLEMENTED] Tuple of two values for movement in \</span>
+<span class="sd">            height and width.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A dictionary containing imagery, (reference), crs and transform.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Create dict to collect loaded values</span>
+    <span class="n">out_dict</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">if</span> <span class="n">offset</span> <span class="o">!=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;Offseting is not currently implemented.&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Load the input imagery and geoinformation</span>
+    <span class="k">with</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">img_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">img</span><span class="p">:</span>
+        <span class="n">out_dict</span><span class="p">[</span><span class="s1">&#39;imagery&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">moveaxis</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">out_dict</span><span class="p">[</span><span class="s1">&#39;crs&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">crs</span>
+        <span class="n">out_dict</span><span class="p">[</span><span class="s1">&#39;transform&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">transform</span>
+
+    <span class="k">if</span> <span class="n">ref_path</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">ref_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">ref</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">out_dict</span><span class="p">[</span><span class="s1">&#39;crs&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">ref</span><span class="o">.</span><span class="n">crs</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;The input rasters are in a different CRS.&#39;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">out_dict</span><span class="p">[</span><span class="s1">&#39;transform&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">ref</span><span class="o">.</span><span class="n">transform</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;The input rasters do not overlap.&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">out_dict</span><span class="p">[</span><span class="s1">&#39;reference&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">moveaxis</span><span class="p">(</span><span class="n">ref</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">out_dict</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="etrainee_m4_utils.preprocessing.remove_nodata_tiles" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">remove_nodata_tiles</span><span class="p">(</span><span class="n">in_data</span><span class="p">,</span> <span class="n">nodata_val</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">min_area</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Removes tiles without any reference pixels.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code>in_data</code></td>
+            <td>
+                  <code>dict</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Dictionary containing the relevant tile arrays.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>nodata_val</code></td>
+            <td>
+                  <code>int</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Nodata value in the reference raster.</p>
+              </div>
+            </td>
+            <td>
+                  <code>0</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>min_area</code></td>
+            <td>
+                  <code>float</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>[NOT IMPLEMENTED]</p>
+              </div>
+            </td>
+            <td>
+                  <code>1.0</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code>dict</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A dictionary containing tiled imagery, (reference), crs and transform.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+            <details class="quote">
+              <summary>Source code in <code>src\etrainee_m4_utils\preprocessing.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">remove_nodata_tiles</span><span class="p">(</span><span class="n">in_data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">nodata_val</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+                        <span class="n">min_area</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Removes tiles without any reference pixels.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        in_data: Dictionary containing the relevant tile arrays.</span>
+<span class="sd">        nodata_val: Nodata value in the reference raster.</span>
+<span class="sd">        min_area: [NOT IMPLEMENTED]</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A dictionary containing tiled imagery, (reference), crs and transform.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s1">&#39;reference&#39;</span> <span class="ow">in</span> <span class="n">in_data</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">min_area</span> <span class="o">!=</span> <span class="mf">1.0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;Minimal area is not currently </span><span class="se">\</span>
+<span class="s1">                                      implemented.&#39;</span><span class="p">)</span>
+        <span class="c1"># Copy unchanged values from the input dict</span>
+        <span class="n">out_dict</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">in_data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span>
+                          <span class="p">[</span><span class="s1">&#39;crs&#39;</span><span class="p">,</span> <span class="s1">&#39;transform&#39;</span><span class="p">,</span> <span class="s1">&#39;num_tiles&#39;</span><span class="p">,</span> <span class="s1">&#39;shape_cropped&#39;</span><span class="p">]</span>
+                          <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">in_data</span><span class="p">}</span>
+
+        <span class="c1"># Create a mask... true if a tile contains other values than nodata_val</span>
+        <span class="n">mask</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">in_data</span><span class="p">[</span><span class="s1">&#39;reference&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">nodata_val</span><span class="p">,</span>
+                                  <span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+        <span class="c1"># Use the mask to filter the array</span>
+        <span class="n">out_dict</span><span class="p">[</span><span class="s1">&#39;imagery&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">in_data</span><span class="p">[</span><span class="s1">&#39;imagery&#39;</span><span class="p">][</span><span class="n">mask</span><span class="p">]</span>
+        <span class="n">out_dict</span><span class="p">[</span><span class="s1">&#39;reference&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">in_data</span><span class="p">[</span><span class="s1">&#39;reference&#39;</span><span class="p">][</span><span class="n">mask</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">out_dict</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">in_data</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="etrainee_m4_utils.preprocessing.split_into_tiles" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">split_into_tiles</span><span class="p">(</span><span class="n">in_data</span><span class="p">,</span> <span class="n">tile_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span> <span class="n">tile_overlap</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span></code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Splits the imagery into tiles for training/inference. Necessary for
+memory and training reasons.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code>in_data</code></td>
+            <td>
+                  <code>dict</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Dictionary containing the relevant data arrays.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>tile_shape</code></td>
+            <td>
+                  <code>tuple[int]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Tuple of two values (h, w), which are used as the             shape of individual tiles.</p>
+              </div>
+            </td>
+            <td>
+                  <code>(256, 256)</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>tile_overlap</code></td>
+            <td>
+                  <code>int</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>By how many pixels do individual tiles overlap.</p>
+              </div>
+            </td>
+            <td>
+                  <code>128</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>offset</code></td>
+            <td>
+                  <code>tuple[int]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>[NOT IMPLEMENTED] Tuple of two values for movement in             height and width.</p>
+              </div>
+            </td>
+            <td>
+                  <code>(0, 0)</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code>dict</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A dictionary containing tiled imagery, (reference), crs and transform.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+            <details class="quote">
+              <summary>Source code in <code>src\etrainee_m4_utils\preprocessing.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">split_into_tiles</span><span class="p">(</span><span class="n">in_data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">tile_shape</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span>
+                     <span class="n">tile_overlap</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">128</span><span class="p">,</span>
+                     <span class="n">offset</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Splits the imagery into tiles for training/inference. Necessary for</span>
+<span class="sd">    memory and training reasons.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        in_data: Dictionary containing the relevant data arrays.</span>
+<span class="sd">        tile_shape: Tuple of two values (h, w), which are used as the \</span>
+<span class="sd">            shape of individual tiles.</span>
+<span class="sd">        tile_overlap: By how many pixels do individual tiles overlap.</span>
+<span class="sd">        offset: [NOT IMPLEMENTED] Tuple of two values for movement in \</span>
+<span class="sd">            height and width.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A dictionary containing tiled imagery, (reference), crs and transform.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Copy unchanged values from the input dict</span>
+    <span class="n">out_dict</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">in_data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span>
+                      <span class="p">[</span><span class="s1">&#39;crs&#39;</span><span class="p">,</span> <span class="s1">&#39;transform&#39;</span><span class="p">,</span> <span class="s1">&#39;num_tiles&#39;</span><span class="p">,</span> <span class="s1">&#39;shape_cropped&#39;</span><span class="p">]</span>
+                      <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">in_data</span><span class="p">}</span>
+
+    <span class="c1"># Raise error if trying to use offset</span>
+    <span class="k">if</span> <span class="n">offset</span> <span class="o">!=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;Offseting is not currently implemented.&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Tile imagery in the input dataset</span>
+    <span class="n">img_tile_processor</span> <span class="o">=</span> <span class="n">_Tile_processor</span><span class="p">(</span><span class="n">in_data</span><span class="p">[</span><span class="s1">&#39;imagery&#39;</span><span class="p">],</span> <span class="n">tile_shape</span><span class="p">,</span>
+                                         <span class="n">tile_overlap</span><span class="p">,</span> <span class="n">offset</span><span class="p">)</span>
+    <span class="n">tile_arr</span><span class="p">,</span> <span class="n">tile_dims</span> <span class="o">=</span> <span class="n">img_tile_processor</span><span class="o">.</span><span class="n">process_tiles</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">out_dict</span><span class="p">[</span><span class="s1">&#39;imagery&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tile_arr</span>
+    <span class="n">out_dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">tile_dims</span><span class="p">)</span>
+
+    <span class="c1"># If the input dataset contains reference data, tile it too</span>
+    <span class="k">if</span> <span class="s1">&#39;reference&#39;</span> <span class="ow">in</span> <span class="n">in_data</span><span class="p">:</span>
+        <span class="n">ref_tile_processor</span> <span class="o">=</span> <span class="n">_Tile_processor</span><span class="p">(</span><span class="n">in_data</span><span class="p">[</span><span class="s1">&#39;reference&#39;</span><span class="p">],</span> <span class="n">tile_shape</span><span class="p">,</span>
+                                             <span class="n">tile_overlap</span><span class="p">,</span> <span class="n">offset</span><span class="p">)</span>
+        <span class="n">out_dict</span><span class="p">[</span><span class="s1">&#39;reference&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ref_tile_processor</span><span class="o">.</span><span class="n">process_tiles</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">out_dict</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.ad660dcc.min.js"></script>
+      
+    
+  </body>
+</html>
