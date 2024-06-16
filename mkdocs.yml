@@ -1,0 +1,24 @@
+site_name: ETRAINEE-M4-utils Docs
+
+theme:
+  name: "material"
+
+plugins:
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          paths: [src]
+
+nav:
+  - Home: 'index.md'
+#  - tutorials.md
+#  - how-to-guides.md
+  - API Reference:
+      - Overview: reference.md
+      - Submodules:
+        - 'reference/preprocessing.md'
+        - 'reference/postprocessing.md'
+        - 'reference/visualisation.md'
+        - 'reference/hyperspectral.md'
+#  - explanation.md
