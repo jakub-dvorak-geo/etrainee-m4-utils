@@ -1,0 +1,11 @@
+name: etrainee_m4
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - matplotlib
+  - numpy
+  - pytorch
+  - rasterio
+  - scikit-learn
+  - scipy

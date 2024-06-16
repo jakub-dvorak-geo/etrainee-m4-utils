@@ -2,12 +2,8 @@
 
 __version__ = '0.3.0'
 
-"""
-import preprocessing
-import postprocessing
-import visualisation
-import hyperspectral
 
 __all__ = ['preprocessing', 'postprocessing',
-           'visualisation', 'hyperspectral']
-"""
+           'visualisation', 'hyperspectral',
+           'image_preprocessing', 'inference_utils',
+           'visualisation_utils', 'hs_classification']
