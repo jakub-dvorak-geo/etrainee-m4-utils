@@ -90,7 +90,7 @@ def write_rasterio(out_path: str, arr_classified: np.ndarray,
         # Write array to raster
         pass
     print(f'Raster saved succesfully to {out_path}')
-
+    """
     driver = gdal.GetDriverByName('Gtiff')
     out_ds = driver.Create(out_path, xsize=arr.shape[1], ysize=arr.shape[0],
                            bands=1, eType=gdal.GDT_Byte,
@@ -101,6 +101,7 @@ def write_rasterio(out_path: str, arr_classified: np.ndarray,
     out_ds.GetRasterBand(1).WriteArray(arr)
     out_ds = None
     print(f'Raster saved succesfully to {out_path}')
+    """
 
 
 if __name__ == '__main__':
