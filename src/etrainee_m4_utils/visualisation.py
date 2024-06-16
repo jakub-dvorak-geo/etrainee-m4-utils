@@ -1,6 +1,6 @@
 # etrainee_m4_utils/visualisation.py
 
-"""Visualise imagery, spectarl curves and classification results.
+"""Visualise imagery, spectral curves and classification results.
 
 The module contains the following functions:
 
